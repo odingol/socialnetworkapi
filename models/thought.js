@@ -12,8 +12,14 @@ const thoughtSchema = new Schema(
         },
         createdAt: {
             type: Date,
-            default: Date.now
+            default: Date.now,
             // Use a getter method to format the timestamp on query
+            get: function(timestamp) {
+                let newTime = new Date(timestamp)
+                newTime = newTime.format('MM-DD-YYYY')
+                return newTime
+                // return newTime.toLocaleDateString();
+            }
         },
         username: {
             type: String,

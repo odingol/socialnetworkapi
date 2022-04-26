@@ -20,8 +20,8 @@ const userSchema = new Schema(
             required: 'Email address is required!',
             unique: true,
             // Must match a valid email address (look into Mongoose matching validation)
-            validate: [validateEmail, 'Please fill a valid email address!'],
-            match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address!']
+            validate: [validateEmail, 'Please fill a valid email address!1'],
+            match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address!2']
         },
         thoughts: [
             {
@@ -53,7 +53,7 @@ userSchema
         return `${this.friends}`
     })
     .set(function (v) {
-        const friends = v.length();
+        const friends = v.length;
         this.set({ friends });
     });
 
