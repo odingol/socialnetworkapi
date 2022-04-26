@@ -1,7 +1,7 @@
 const { User, Thought } = require('../models');
 
 module.exports = {
-    // Get all users
+    // Get all users using the find() method and returning the results as JSON with a catch if any errors exist
     getUsers(req, res) {
         User.find()
         .then((users) => res.json(users))
