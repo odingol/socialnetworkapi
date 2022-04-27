@@ -2,8 +2,8 @@ const { User, Thought } = require('../models');
 
 module.exports = {
 
-    // Function to get all thoughts using the find() methodand returning the results as JSON and a catch if there are any errors
-    getThoughts(req, res) {
+    // Function to get all thoughts using the find() method and returning the results as JSON and a catch if there are any errors
+    getThoughts (req, res) {
         Thought.find()
             .then((thoughts) => res.json(thoughts))
             .catch((err) => res.status(500).json(err));
@@ -27,7 +27,20 @@ module.exports = {
     // deleting a thought
     deleteThought(req, res) {
         Thought.findOneAndRemove({_id: req.params.thoughtId })
+        .then((thought) => {
+            !thought
+            ? res.status(404).json({message: 'No existing thought with that id!'})
+            : User.findOneAndUpdate(
+                {thought: req.params.thoughtId},
+                { $pull: {thoughts: req.parmas.thoughtId}},
+                {new: true}
+            )
+        })
+        .then((user) => {
+            !user
+            ? res.status(404).json({message: 'Could not remove thought inside User!'})
+            : res.json(user)
+        })
+        .catch((err) => res.status(500).json(err));
     }
-
-
 }
