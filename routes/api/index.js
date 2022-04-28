@@ -3,8 +3,8 @@ const userRoutes = require('./api/reactionRoutes');
 const thoughtRoutes = require('./api/thoughtRoutes');
 // const reactionRoute = require('./api/reactionRoutes');
 
-app.use('/users', userRoutes);
-app.use('/thoughts', thoughtRoutes);
+router.use('/users', userRoutes);
+router.use('/thoughts', thoughtRoutes);
 
 
 
