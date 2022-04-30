@@ -21,7 +21,14 @@ module.exports = {
     // creating a thought
     createNewThought(req, res) {
         Thought.create(req.body)
-        .then((thought) => res.json(thought))
+        .then((thought) => {
+            // Updates the thoughts key array so the user's thoughts are visible upon user route request
+            return User.findOneAndUpdate(
+                { _id: req.params.userId },
+                { $addToSet: {thoughts: thought._id} },
+                { new: true }
+            );
+        })
         .catch((err) => res.status(500).json(err));
         console.log(req.body);
     },

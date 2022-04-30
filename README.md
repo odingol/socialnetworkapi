@@ -29,10 +29,10 @@ SO THAT I can create a professional README for all of my new projects
 npm install
 ```
 
-3) Once step 2 is completed, copy the code "node index.js" and paste inside the terminal to begin running the application
+3) Once step 2 is completed, copy the code "npm start" and paste inside the terminal to begin running the application
 
 ```bash
-node index.js
+npm start
 ```
 
     
