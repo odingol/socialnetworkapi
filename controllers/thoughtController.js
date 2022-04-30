@@ -23,12 +23,19 @@ module.exports = {
         Thought.create(req.body)
         .then((thought) => {
             // Updates the thoughts key array so the user's thoughts are visible upon user route request
+            console.log('creating a new thought', thought);
             return User.findOneAndUpdate(
-                { _id: req.params.userId },
-                { $addToSet: {thoughts: thought._id} },
+                { _id: req.body.userId },
+                { $push: {thoughts: thought._id} },
                 { new: true }
             );
         })
+        .then((user) => {
+        // !user
+        //     ? res.status(404).json({message: 'Thought could not be created'})
+        //     : res.json(thought);
+        console.log(user);
+    })
         .catch((err) => res.status(500).json(err));
         console.log(req.body);
     },
