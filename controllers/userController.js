@@ -20,7 +20,7 @@ module.exports = {
     },
     // Creating a new user
     createNewUser(req, res) {
-        User.create(req.bod)
+        User.create(req.body)
         .then((user) => res.json(user))
         .catch((err) => res.status(500).json(err));
     },

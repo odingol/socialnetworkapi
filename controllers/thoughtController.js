@@ -23,6 +23,7 @@ module.exports = {
         Thought.create(req.body)
         .then((thought) => res.json(thought))
         .catch((err) => res.status(500).json(err));
+        console.log(req.body);
     },
 
     // update a thought
