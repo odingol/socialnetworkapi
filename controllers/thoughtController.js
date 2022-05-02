@@ -23,17 +23,17 @@ module.exports = {
         Thought.create(req.body)
         .then((thought) => {
             // Updates the thoughts key array so the user's thoughts are visible upon user route request
-            console.log('creating a new thought', thought);
+            // console.log('creating a new thought', thought);
             return User.findOneAndUpdate(
                 { _id: req.body.userId },
-                { $push: {thoughts: thought._id} },
+                { $addToSet: {thoughts: thought._id} },
                 { new: true }
             );
         })
         .then((user) => {
-        // !user
-        //     ? res.status(404).json({message: 'Thought could not be created'})
-        //     : res.json(thought);
+        !user
+            ? res.status(404).json({message: 'Thought is created, but no User with that id exists!'})
+            : res.json(user);
         console.log(user);
     })
         .catch((err) => res.status(500).json(err));
@@ -69,9 +69,38 @@ module.exports = {
         })
         .then((user) => {
             !user
-            ? res.status(404).json({message: 'Could not remove thought inside User!'})
+            ? res.status(404).json({message: 'Thought has been removed, but no user exists with that id!'})
             : res.json(user)
         })
         .catch((err) => res.status(500).json(err));
+    },
+
+    // Creating a reaction
+    createReaction(req, res) {
+        Thought.findByIdAndUpdate(
+            { _id: req.params.thoughtId },
+            { $push: { reactions: req.body} },
+            { runValidators: true, new: true }
+        )
+        .then((thought) => 
+            !thought
+            ? res.status(404).json({message: 'No existing thought with that id!' })
+            : res.json(thought)
+        )
+        .catch((err) => res.status(500).json(err));
+    },
+
+    deleteReaction(req, res) {
+        Thought.findByIdAndUpdate(
+            { _id: req.params.thoughtId },
+            { $pull: { reactions: { reactionId: req.params.reactionId } } },
+            { runValidators: true, new: true }
+        )
+        .then((thought) => 
+        !thought
+        ? res.status(404).json({message: 'No existing thought with that id!' })
+        : res.json(thought)
+        )
+        .catch((err) => res.status(500).json(err));
     }
-}
+};

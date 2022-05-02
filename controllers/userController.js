@@ -5,6 +5,7 @@ module.exports = {
     getUsers(req, res) {
         User.find()
         .populate('thoughts')
+        .populate('friends')
         .then((users) => res.json(users))
         .catch((err) => res.status(500).json(err));
     },
@@ -13,6 +14,7 @@ module.exports = {
         User.findOne({ _id: req.params.userId})
         .select('-__v')
         .populate('thoughts')
+        .populate('friends')
         .then((user) => 
         !user
             ? res.status(404).json({ message: 'No user with that ID!' })
@@ -54,4 +56,33 @@ module.exports = {
         .catch((err) => res.status(500).json(err));
     },
 
+    // Adding a friend to the friendslist. This add the body of the friendId only to the User
+    addFriend(req, res) {
+        User.findByIdAndUpdate(
+            { _id: req.params.userId },
+            { $addToSet: {friends: req.params.friendId } },
+            { runValidators: true, new: true }
+        )
+        .then((user) =>
+            !user
+            ? res.status(404).json({ message: 'No user exists with the following id!' })
+            : res.json(user)
+        )
+        .catch((err) => res.status(500).json(err))
+    },
+
+    // Removing a friend from the friends list. This finds the User based on its ID and then updates the friends array associated with its friendId to be removed from the User list.
+    removeFriend(req, res) {
+        User.findByIdAndUpdate(
+            { _id: req.params.userId},
+            { $pull: {friends: {friendId: req.params.friendId } } },
+            { runValidators: true, new: true }
+        )
+        .then((user) => 
+        !user
+            ? res.status(404).json({message: 'No User found with the following id!' })
+            : res.json(user)
+        )
+        .catch((err) => res.status(500).json(err));
+    }
 };
