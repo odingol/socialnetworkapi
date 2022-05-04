@@ -19,8 +19,6 @@ SO THAT I can create a professional README for all of my new projects
     
 1) Go to my Github and clone this repo
 
-![Git Clone Navigation]()
-
 <br>
 
 2) Once downloaded, copy the code "npm install" and paste inside the terminal of your code editor
@@ -41,13 +39,14 @@ npm start
 
 This app is designed to...
 
-[CLICK HERE]() if you would like to follow along on YouTube.
+[CLICK HERE](https://youtu.be/LSSpDg5cmkw) if you would like to follow along on YouTube.
+Here is [PART 2](https://youtu.be/sQbP3fLGzEQ) to follow the rest
 
 <br>Here is an example of the use of the application:
 
 <br>
 
-![socialnetworkapi functionality](./images/makeREADME-tutorial.gif)
+![socialnetworkapi functionality](./assets/socialnetwork-demo.gif)
 <br><br>
     
 ## License 

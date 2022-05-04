@@ -71,9 +71,10 @@ module.exports = {
 
     // Removing a friend from the friends list. This finds the User based on its ID and then updates the friends array associated with its friendId to be removed from the User list.
     removeFriend(req, res) {
+        console.log(res);
         User.findByIdAndUpdate(
-            { _id: req.params.userId},
-            { $pull: {friends: {friendId: req.params.friendId } } },
+            { _id: req.params.userId },
+            { $pull: { friends: req.params.friendId } },
             { runValidators: true, new: true }
         )
         .then((user) => 
